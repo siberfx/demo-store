@@ -5,8 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Demo Storefront</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        @livewireStyles
     </head>
     <body class="antialiased">
         {{ $slot }}
+
+        @livewireScripts
     </body>
 </html>
