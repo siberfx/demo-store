@@ -8,6 +8,8 @@
         @livewireStyles
     </head>
     <body class="antialiased">
+        @livewire('components.navigation')
+
         {{ $slot }}
 
         @livewireScripts
