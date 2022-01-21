@@ -21,7 +21,7 @@ return [
     | to minimise the amount of cart lines added to the database.
     |
     */
-    'auto_create' => false,
+    'auto_create' => true,
 
     /*
     |--------------------------------------------------------------------------
