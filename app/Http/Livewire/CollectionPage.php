@@ -30,7 +30,10 @@ class CollectionPage extends Component
         $this->url = Url::whereElementType(Collection::class)
             ->whereDefault(true)
             ->whereSlug($slug)
-            ->first();
+            ->with([
+                'element.thumbnail',
+                'element.products.variants.basePrices'
+            ])->first();
 
         if (!$this->url) {
             abort(404);

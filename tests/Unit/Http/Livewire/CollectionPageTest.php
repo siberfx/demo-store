@@ -4,6 +4,8 @@ namespace Tests\Unit\Http\Livewire;
 
 use App\Http\Livewire\CollectionPage;
 use GetCandy\Models\Collection;
+use GetCandy\Models\Product;
+use GetCandy\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -57,7 +59,33 @@ class CollectionPageTest extends TestCase
             ])->create();
 
         Livewire::test(CollectionPage::class, ['slug' => $collection->urls->first()->slug])
-            ->assertSeeHtml('<h1>'.$collection->translateAttribute('name').'</h1>')
+            ->assertSee($collection->translateAttribute('name'))
             ->assertViewIs('livewire.collection-page');
+    }
+
+    /**
+     * Test products are loaded on the page
+     *
+     * @return void
+     */
+    public function test_collection_renders_products()
+    {
+        $collection = Collection::factory()
+            ->hasUrls(1, [
+                'default' => true,
+            ])->has(
+                Product::factory(4)
+                    ->hasUrls(1, [
+                        'default' => true,
+                    ])
+                    ->has(ProductVariant::factory(), 'variants')
+            )->create();
+
+        $component = Livewire::test(CollectionPage::class, ['slug' => $collection->urls->first()->slug])
+            ->assertViewIs('livewire.collection-page');
+
+        foreach ($collection->products as $product) {
+            $component->assertSee($product->translateAttribute('name'));
+        }
     }
 }
