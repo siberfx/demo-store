@@ -13,6 +13,14 @@ trait FetchesUrls
      */
     public ?Url $url = null;
 
+    /**
+     * Fetch a url model.
+     *
+     * @param string $slug
+     * @param string $type
+     * @param array $eagerLoad
+     * @return \GetCandy\Models\Url|null
+     */
     public function fetchUrl($slug, $type, $eagerLoad = [])
     {
         return Url::whereElementType($type)
