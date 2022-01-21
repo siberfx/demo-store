@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Traits\FetchesUrls;
 use GetCandy\Models\Collection;
 use GetCandy\Models\Url;
 use Livewire\Component;
@@ -9,14 +10,8 @@ use Livewire\ComponentConcerns\PerformsRedirects;
 
 class CollectionPage extends Component
 {
-    use PerformsRedirects;
-
-    /**
-     * The URL model from the slug.
-     *
-     * @var \GetCandy\Models\Url
-     */
-    public ?Url $url = null;
+    use PerformsRedirects,
+        FetchesUrls;
 
     /**
      * {@inheritDoc}
@@ -27,13 +22,15 @@ class CollectionPage extends Component
      */
     public function mount($slug)
     {
-        $this->url = Url::whereElementType(Collection::class)
-            ->whereDefault(true)
-            ->whereSlug($slug)
-            ->with([
+        $this->url = $this->fetchUrl(
+            $slug,
+            Collection::class,
+            [
                 'element.thumbnail',
-                'element.products.variants.basePrices'
-            ])->first();
+                'element.products.variants.basePrices',
+                'element.products.defaultUrl'
+            ]
+        );
 
         if (!$this->url) {
             abort(404);
