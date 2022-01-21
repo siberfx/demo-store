@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Http\Livewire;
 
 use App\Http\Livewire\Home;
 use Livewire\Livewire;

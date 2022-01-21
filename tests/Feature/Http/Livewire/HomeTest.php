@@ -1,9 +1,7 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Livewire;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class HomeTest extends TestCase
