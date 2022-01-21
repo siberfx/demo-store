@@ -1,6 +1,5 @@
 <div>
     <section>
-
         <div class="relative max-w-screen-xl px-4 py-8 mx-auto">
             <div class="grid items-start grid-cols-1 gap-8 md:grid-cols-2">
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
@@ -8,19 +7,8 @@
                         <img
                             alt="Mobile Phone Stand"
                             class="object-cover rounded-xl"
-                            src="{{ $this->image->getUrl('large') }}"
+                            src="{{ $this->image }}"
                         />
-                    </div>
-                    <div class="flex space-x-4">
-                    @foreach($this->images as $image)
-                        <div class="aspect-w-1 aspect-h-1" wire:key="image_{{ $image->id }}">
-                            <img
-                                alt="Mobile Phone Stand"
-                                class="object-cover rounded-xl"
-                                src="{{ $image->getUrl('small') }}"
-                            />
-                        </div>
-                    @endforeach
                     </div>
                 </div>
 
@@ -32,7 +20,6 @@
                             <h1 class="text-2xl font-bold">
                                 {{ $this->product->translateAttribute('name') }}
                             </h1>
-                            {{ $this->variant->sku }}
                         </div>
 
                         <x-product-price :variant="$this->variant" class="text-lg font-bold" />
@@ -50,21 +37,12 @@
                                 <div class="flow-root">
                                     <div class="flex flex-wrap -m-0.5">
                                         @foreach($option['values'] as $value)
-                                        <button
-                                            type="button"
-                                            wire:click="$set('selectedOptionValues.{{ $option['option']->id }}', {{ $value->id }})"
-                                            class="cursor-pointer p-0.5">
-                                            <span
-                                                class="
-                                                    inline-block px-3 py-1 text-xs font-medium border rounded-full group
-                                                    @if($this->selectedOptionValues[$option['option']->id] == $value->id)
-                                                        bg-black text-white
-                                                    @endif
-                                                "
-                                            >
+                                        <label for="color_tt" class="cursor-pointer p-0.5">
+                                            <input type="radio" name="color" id="color_tt" class="sr-only peer" />
+                                            <span class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
                                                 {{ $value->translate('name') }}
                                             </span>
-                                        </button>
+                                        </label>
                                         @endforeach
                                     </div>
                                 </div>

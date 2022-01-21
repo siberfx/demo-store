@@ -5,18 +5,10 @@ namespace App\Http\Livewire;
 use App\Traits\FetchesUrls;
 use GetCandy\Models\Product;
 use Livewire\Component;
-use Livewire\ComponentConcerns\PerformsRedirects;
 
 class ProductPage extends Component
 {
-    use FetchesUrls, PerformsRedirects;
-
-    /**
-     * The selected option values.
-     *
-     * @var array
-     */
-    public $selectedOptionValues = [];
+    use FetchesUrls;
 
     /**
      * {@inheritDoc}
@@ -31,19 +23,10 @@ class ProductPage extends Component
             Product::class,
             [
                 'element.media',
-                'element.variants.basePrices.currency',
-                'element.variants.basePrices.priceable',
+                'element.variants.basePrices',
                 'element.variants.values.option'
             ]
         );
-
-        $this->selectedOptionValues = $this->productOptions->mapWithKeys(function ($data) {
-            return [$data['option']->id => $data['values']->first()->id];
-        })->toArray();
-
-        if (!$this->variant) {
-            abort(404);
-        }
     }
 
     /**
@@ -53,12 +36,7 @@ class ProductPage extends Component
      */
     public function getVariantProperty()
     {
-        return $this->product->variants->first(function ($variant) {
-            return !$variant->values->pluck('id')
-                ->diff(
-                    collect($this->selectedOptionValues)->values()
-                )->count();
-        });
+        return $this->product->variants->first();
     }
 
     /**
@@ -98,31 +76,13 @@ class ProductPage extends Component
     }
 
     /**
-     * Return all images for the product.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function getImagesProperty()
-    {
-        return $this->product->media;
-    }
-
-    /**
      * Computed property to return current image.
      *
      * @return string
      */
     public function getImageProperty()
     {
-        if ($this->variant->thumbnail) {
-            return $this->variant->thumbnail;
-        }
-
-        if ($primary = $this->images->first(fn($media) => $media->getCustomProperty('primary'))) {
-            return $primary;
-        }
-
-        return $this->images->first();
+        return $this->product->thumbnail?->getUrl('large');
     }
 
     /**
