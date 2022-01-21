@@ -28,9 +28,34 @@ class ProductPage extends Component
         );
     }
 
+    /**
+     * Computed property to get variant.
+     *
+     * @return \GetCandy\Models\ProductVariant
+     */
+    public function getVariantProperty()
+    {
+        return $this->product->variants->first();
+    }
+
+    /**
+     * Computed property to return product.
+     *
+     * @return \GetCandy\Models\Product
+     */
     public function getProductProperty()
     {
         return $this->url->element;
+    }
+
+    /**
+     * Computed property to return current image.
+     *
+     * @return string
+     */
+    public function getImageProperty()
+    {
+        return $this->product->thumbnail?->getUrl('large');
     }
 
     /**

@@ -49,4 +49,22 @@ class ProductPageTest extends TestCase
             ->assertViewIs('livewire.product-page')
             ->assertSet('product.id', $product->id);
     }
+
+    /**
+     * A basic unit test example.
+     *
+     * @return void
+     */
+    public function test_product_is_visible()
+    {
+        $product = Product::factory()
+            ->hasUrls(1, [
+                'default' => true,
+            ])->has(ProductVariant::factory(), 'variants')
+            ->create();
+
+        Livewire::test(ProductPage::class, ['slug' => $product->urls->first()->slug])
+            ->assertViewIs('livewire.product-page')
+            ->assertSee($product->translateAttribute('name'));
+    }
 }
