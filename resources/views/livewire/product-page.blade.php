@@ -1,5 +1,6 @@
 <div>
     <section>
+
         <div class="relative max-w-screen-xl px-4 py-8 mx-auto">
             <div class="grid items-start grid-cols-1 gap-8 md:grid-cols-2">
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
@@ -20,6 +21,7 @@
                             <h1 class="text-2xl font-bold">
                                 {{ $this->product->translateAttribute('name') }}
                             </h1>
+                            {{ $this->variant->sku }}
                         </div>
 
                         <x-product-price :variant="$this->variant" class="text-lg font-bold" />
@@ -37,12 +39,21 @@
                                 <div class="flow-root">
                                     <div class="flex flex-wrap -m-0.5">
                                         @foreach($option['values'] as $value)
-                                        <label for="color_tt" class="cursor-pointer p-0.5">
-                                            <input type="radio" name="color" id="color_tt" class="sr-only peer" />
-                                            <span class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
+                                        <button
+                                            type="button"
+                                            wire:click="$set('selectedOptionValues.{{ $option['option']->id }}', {{ $value->id }})"
+                                            class="cursor-pointer p-0.5">
+                                            <span
+                                                class="
+                                                    inline-block px-3 py-1 text-xs font-medium border rounded-full group
+                                                    @if($this->selectedOptionValues[$option['option']->id] == $value->id)
+                                                        bg-black text-white
+                                                    @endif
+                                                "
+                                            >
                                                 {{ $value->translate('name') }}
                                             </span>
-                                        </label>
+                                        </button>
                                         @endforeach
                                     </div>
                                 </div>

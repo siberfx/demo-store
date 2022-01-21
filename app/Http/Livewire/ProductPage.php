@@ -5,10 +5,18 @@ namespace App\Http\Livewire;
 use App\Traits\FetchesUrls;
 use GetCandy\Models\Product;
 use Livewire\Component;
+use Livewire\ComponentConcerns\PerformsRedirects;
 
 class ProductPage extends Component
 {
-    use FetchesUrls;
+    use FetchesUrls, PerformsRedirects;
+
+    /**
+     * The selected option values.
+     *
+     * @var array
+     */
+    public $selectedOptionValues = [];
 
     /**
      * {@inheritDoc}
@@ -23,10 +31,19 @@ class ProductPage extends Component
             Product::class,
             [
                 'element.media',
+                'element.thumbnail',
                 'element.variants.basePrices',
                 'element.variants.values.option'
             ]
         );
+
+        $this->selectedOptionValues = $this->productOptions->mapWithKeys(function ($data) {
+            return [$data['option']->id => $data['values']->first()->id];
+        })->toArray();
+
+        if (!$this->variant) {
+            abort(404);
+        }
     }
 
     /**
@@ -36,7 +53,12 @@ class ProductPage extends Component
      */
     public function getVariantProperty()
     {
-        return $this->product->variants->first();
+        return $this->product->variants->first(function ($variant) {
+            return !$variant->values->pluck('id')
+                ->diff(
+                    collect($this->selectedOptionValues)->values()
+                )->count();
+        });
     }
 
     /**
