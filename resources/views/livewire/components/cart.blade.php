@@ -19,17 +19,23 @@
 
         <span class="block mt-1 text-xs font-medium">Cart</span>
     </button>
-    <div class="absolute right-0 z-50 p-4 bg-gray-900 rounded-b shadow w-96" x-show="linesVisible">
+    <div class="absolute right-0 z-50 p-4 bg-gray-900 rounded-b shadow w-96" x-show="linesVisible" x-on:click.away="linesVisible = false">
         <div class="p-4 space-y-2 text-sm bg-white rounded">
-            @forelse($this->lines as $line)
-                <div class="flex items-center space-x-4">
+            @forelse($lines as $index => $line)
+                <div class="flex items-center py-2 space-x-4 border-t first:border-none">
                     <div class="w-1/5">
-                        <img src="{{ $line->purchasable->getThumbnail() }}" class="rounded">
+                        <img src="{{ $line['thumbnail'] }}" class="rounded">
                     </div>
                     <div class="grow">
-                        <strong>{{ $line->purchasable->getDescription() }}</strong>
-                        <span class="block text-xs">{{ $line->purchasable->getIdentifier() }}</span>
-                        <span>Qty:{{ $line->quantity }} @ {{ $line->subTotal->formatted() }}</span>
+                        <strong>{{ $line['description'] }}</strong>
+                        <span class="block text-xs">{{ $line['identifier'] }}</span>
+                        <span class="block text-xs">{{ $line['option'] }}</span>
+                        <div class="flex items-center mt-2 space-x-4">
+                            <input type="number" class="w-1/3 p-2 text-xs border border-gray-900" wire:model="lines.{{ $index }}.quantity" />
+                            <div class="grow">
+                                @ {{ $line['sub_total'] }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             @empty
