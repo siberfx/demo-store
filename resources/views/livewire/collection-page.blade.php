@@ -10,7 +10,7 @@
             <div class="grid grid-cols-1 gap-4 mt-8 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 @forelse($this->collection->products as $product)
                 <a
-                    href="/product/bamboo-toothbrush"
+                    href="{{ route('product.view', $product->defaultUrl->slug) }}"
                     class="block"
                 >
                     <div class="aspect-w-1 aspect-h-1">
