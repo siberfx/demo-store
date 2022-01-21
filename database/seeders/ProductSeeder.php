@@ -11,6 +11,7 @@ use GetCandy\Models\Attribute;
 use GetCandy\Models\Collection;
 use GetCandy\Models\CollectionGroup;
 use GetCandy\Models\Currency;
+use GetCandy\Models\Language;
 use GetCandy\Models\Price;
 use GetCandy\Models\Product;
 use GetCandy\Models\ProductOption;
@@ -20,6 +21,7 @@ use GetCandy\Models\ProductVariant;
 use GetCandy\Models\TaxClass;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductSeeder extends AbstractSeeder
 {
@@ -42,8 +44,10 @@ class ProductSeeder extends AbstractSeeder
 
         $collections = Collection::get();
 
-        DB::transaction(function () use ($products, $attributes, $productType, $taxClass, $currency, $collections) {
-            $products->each(function ($product) use ($attributes, $productType, $taxClass, $currency, $collections) {
+        $language = Language::getDefault();
+
+        DB::transaction(function () use ($products, $attributes, $productType, $taxClass, $currency, $collections, $language) {
+            $products->each(function ($product) use ($attributes, $productType, $taxClass, $currency, $collections, $language) {
                 $attributeData = [];
 
                 foreach ($product->attributes as $attributeHandle => $value) {
@@ -66,6 +70,12 @@ class ProductSeeder extends AbstractSeeder
                     'product_type_id' => $productType->id,
                     'status' => 'published',
                     'brand' => $product->brand,
+                ]);
+
+                $productModel->urls()->create([
+                    'default' => true,
+                    'slug' => Str::slug($product->attributes->name),
+                    'language_id' => $language->id,
                 ]);
 
                 // Only one variant...
