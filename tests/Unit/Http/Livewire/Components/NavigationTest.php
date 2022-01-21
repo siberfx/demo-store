@@ -42,7 +42,7 @@ class NavigationTest extends TestCase
             ->assertViewIs('livewire.components.navigation');
 
         foreach ($collections as $collection) {
-            $component->assertSee($collection->translate('name'));
+            $component->assertSee($collection->translateAttribute('name'));
         }
     }
 }
