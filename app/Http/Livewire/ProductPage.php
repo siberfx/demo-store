@@ -88,32 +88,6 @@ class ProductPage extends Component
     }
 
     /**
-     * Computed property to return all available option values.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function getProductOptionValuesProperty()
-    {
-        return $this->product->variants->pluck('values')->flatten();
-    }
-
-    /**
-     * Computed propert to get available product options with values.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function getProductOptionsProperty()
-    {
-        return $this->productOptionValues->groupBy('product_option_id')
-            ->map(function ($values) {
-                return [
-                    'option' => $values->first()->option,
-                    'values' => $values,
-                ];
-            })->values();
-    }
-
-    /**
      * Computed property to return product.
      *
      * @return \GetCandy\Models\Product
