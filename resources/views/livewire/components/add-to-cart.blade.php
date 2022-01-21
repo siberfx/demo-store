@@ -16,6 +16,11 @@
         class="block px-5 py-3 ml-3 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-500"
         wire:click.prevent="addToCart"
     >
-        Add to Cart
+        <div wire:loading.remove wire:target="addToCart">
+            Add to Cart
+        </div>
+        <div wire:loading wire:target="addToCart">
+            Adding...
+        </div>
     </button>
 </div>
