@@ -23,7 +23,8 @@ class ProductPage extends Component
             Product::class,
             [
                 'element.media',
-                'element.variants.basePrices'
+                'element.variants.basePrices',
+                'element.variants.values.option'
             ]
         );
     }
@@ -36,6 +37,32 @@ class ProductPage extends Component
     public function getVariantProperty()
     {
         return $this->product->variants->first();
+    }
+
+    /**
+     * Computed property to return all available option values.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getProductOptionValuesProperty()
+    {
+        return $this->product->variants->pluck('values')->flatten();
+    }
+
+    /**
+     * Computed propert to get available product options with values.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getProductOptionsProperty()
+    {
+        return $this->productOptionValues->groupBy('product_option_id')
+            ->map(function ($values) {
+                return [
+                    'option' => $values->first()->option,
+                    'values' => $values,
+                ];
+            })->values();
     }
 
     /**

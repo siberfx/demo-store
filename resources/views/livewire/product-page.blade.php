@@ -30,106 +30,44 @@
                     </article>
 
                     <form class="mt-8">
-                    <fieldset>
-                        <legend class="mb-1 text-sm font-medium">Color</legend>
+                        @foreach($this->productOptions as $option)
+                            <fieldset>
+                                <legend class="mb-1 text-sm font-medium">{{ $option['option']->translate('name') }}</legend>
 
-                        <div class="flow-root">
-                        <div class="flex flex-wrap -m-0.5">
-                            <label for="color_tt" class="cursor-pointer p-0.5">
-                            <input type="radio" name="color" id="color_tt" class="sr-only peer" />
+                                <div class="flow-root">
+                                    <div class="flex flex-wrap -m-0.5">
+                                        @foreach($option['values'] as $value)
+                                        <label for="color_tt" class="cursor-pointer p-0.5">
+                                            <input type="radio" name="color" id="color_tt" class="sr-only peer" />
+                                            <span class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
+                                                {{ $value->translate('name') }}
+                                            </span>
+                                        </label>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </fieldset>
+                        @endforeach
+                        <div class="flex mt-8">
+                            <div>
+                            <label for="quantity" class="sr-only">Qty</label>
 
-                            <span class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                Texas Tea
-                            </span>
-                            </label>
+                            <input
+                                type="number"
+                                id="quantity"
+                                min="1"
+                                value="1"
+                                class="w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners"
+                            />
+                            </div>
 
-                            <label for="color_fr" class="cursor-pointer p-0.5">
-                            <input type="radio" name="color" id="color_fr" class="sr-only peer" />
-
-                            <span class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                Fiesta Red
-                            </span>
-                            </label>
-
-                            <label for="color_cb" class="cursor-pointer p-0.5">
-                            <input type="radio" name="color" id="color_cb" class="sr-only peer" />
-
-                            <span class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                Cobalt Blue
-                            </span>
-                            </label>
+                            <button
+                            type="submit"
+                            class="block px-5 py-3 ml-3 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-500"
+                            >
+                            Add to Cart
+                            </button>
                         </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="mt-4">
-                        <legend class="mb-1 text-sm font-medium">Size</legend>
-
-                        <div class="flow-root">
-                        <div class="flex flex-wrap -m-0.5">
-                            <label for="size_xs" class="cursor-pointer p-0.5">
-                            <input type="radio" name="size" id="size_xs" class="sr-only peer" />
-
-                            <span class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                XS
-                            </span>
-                            </label>
-
-                            <label for="size_s" class="cursor-pointer p-0.5">
-                            <input type="radio" name="size" id="size_s" class="sr-only peer" />
-
-                            <span class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                S
-                            </span>
-                            </label>
-
-                            <label for="size_m" class="cursor-pointer p-0.5">
-                            <input type="radio" name="size" id="size_m" class="sr-only peer" />
-
-                            <span class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                M
-                            </span>
-                            </label>
-
-                            <label for="size_l" class="cursor-pointer p-0.5">
-                            <input type="radio" name="size" id="size_l" class="sr-only peer" />
-
-                            <span class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                L
-                            </span>
-                            </label>
-
-                            <label for="size_xl" class="cursor-pointer p-0.5">
-                            <input type="radio" name="size" id="size_xl" class="sr-only peer" />
-
-                            <span class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                XL
-                            </span>
-                            </label>
-                        </div>
-                        </div>
-                    </fieldset>
-
-                    <div class="flex mt-8">
-                        <div>
-                        <label for="quantity" class="sr-only">Qty</label>
-
-                        <input
-                            type="number"
-                            id="quantity"
-                            min="1"
-                            value="1"
-                            class="w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners"
-                        />
-                        </div>
-
-                        <button
-                        type="submit"
-                        class="block px-5 py-3 ml-3 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-500"
-                        >
-                        Add to Cart
-                        </button>
-                    </div>
                     </form>
                 </div>
             </div>
