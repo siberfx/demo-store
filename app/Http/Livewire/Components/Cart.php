@@ -47,6 +47,25 @@ class Cart extends Component
     }
 
     /**
+     * Update the cart lines.
+     *
+     * @return void
+     */
+    public function updateLines()
+    {
+        CartSession::manager()->updateLines(
+            collect($this->lines)
+        );
+        $this->mapLines();
+    }
+
+    public function removeLine($id)
+    {
+        CartSession::manager()->removeLine($id);
+        $this->mapLines();
+    }
+
+    /**
      * Map the cart lines.
      *
      * We want to map out our cart lines like this so we can
