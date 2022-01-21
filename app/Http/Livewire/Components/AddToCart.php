@@ -35,6 +35,7 @@ class AddToCart extends Component
     public function addToCart()
     {
         CartSession::manager()->add($this->purchasable, $this->quantity);
+        $this->emit('add-to-cart');
     }
 
     public function render()
