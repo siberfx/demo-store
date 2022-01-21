@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use GetCandy\Models\Price;
 use GetCandy\Models\Product;
+use GetCandy\Models\ProductVariant;
 use Illuminate\View\Component;
 
 class ProductPrice extends Component
@@ -15,11 +16,13 @@ class ProductPrice extends Component
      *
      * @return void
      */
-    public function __construct(Product $product)
+    public function __construct(Product $product, ProductVariant $variant)
     {
-        $this->price = $product->variants
-            ->pluck('basePrices')
-            ->flatten()
+        $prices = $variant ?
+            $variant->basePrices :
+            $product->variants->pluck('basePrices')->flatten();
+
+        $this->price = $prices
             ->sortBy('price')
             ->first();
     }
