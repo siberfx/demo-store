@@ -1,5 +1,5 @@
 <div class="relative" x-data="{
-    linesVisible: false
+    linesVisible: true
 }">
     <button
         class="inline-flex flex-col items-center justify-center w-16 h-16"
@@ -19,9 +19,19 @@
 
         <span class="block mt-1 text-xs font-medium">Cart</span>
     </button>
-    <div class="absolute right-0 z-50 w-64 p-4 bg-gray-900 rounded-b shadow" x-show="linesVisible">
+    <div class="absolute right-0 z-50 p-4 bg-gray-900 rounded-b shadow w-96" x-show="linesVisible">
         <div class="p-4 space-y-2 text-sm bg-white rounded">
             @forelse($this->lines as $line)
+                <div class="flex items-center space-x-4">
+                    <div class="w-1/5">
+                        <img src="{{ $line->purchasable->getThumbnail() }}" class="rounded">
+                    </div>
+                    <div class="grow">
+                        <strong>{{ $line->purchasable->getDescription() }}</strong>
+                        <span class="block text-xs">{{ $line->purchasable->getIdentifier() }}</span>
+                        <span>Qty:{{ $line->quantity }} @ {{ $line->subTotal->formatted() }}</span>
+                    </div>
+                </div>
             @empty
                 <span class="text-xs">Go buy something :)</span>
             @endforelse
