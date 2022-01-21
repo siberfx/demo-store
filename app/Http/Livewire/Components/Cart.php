@@ -15,7 +15,7 @@ class Cart extends Component
 
     public function getCartProperty()
     {
-        return CartSession::getCart();
+        return CartSession::current();
     }
 
     public function getLinesProperty()
