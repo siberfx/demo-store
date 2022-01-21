@@ -7,18 +7,40 @@ use Livewire\Component;
 
 class Cart extends Component
 {
+    /**
+     * The editable cart lines.
+     *
+     * @var array
+     */
     public array $lines;
 
+    protected $listeners = [
+        'add-to-cart' => 'mapLines',
+    ];
+
+    /**
+     * {@inheritDoc}
+     */
     public function mount()
     {
         $this->mapLines();
     }
 
+    /**
+     * Get the current cart instance.
+     *
+     * @return \GetCandy\Managers\CartManager
+     */
     public function getCartProperty()
     {
         return CartSession::current();
     }
 
+    /**
+     * Return the cart lines from the cart.
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function getCartLinesProperty()
     {
         return $this->cart->lines;
