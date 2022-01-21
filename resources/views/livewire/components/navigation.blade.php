@@ -54,18 +54,9 @@
           </a>
         </div>
 
-        <a href="" class="inline-flex flex-col items-center justify-center w-16 h-16 bg-gray-100">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-            />
-          </svg>
-
-          <span class="block mt-1 text-xs font-medium">Cart</span>
-        </a>
+        <div>
+            @livewire('components.cart')
+        </div>
 
         <button
           type="button"
