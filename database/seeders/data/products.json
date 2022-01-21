@@ -36,7 +36,7 @@
         "brand": "Converse",
         "collection": "shoes",
         "sku": "CONV-70",
-        "price": "1500",
+        "price": "15000",
         "image": "converse.jpg",
         "options": [
             {
@@ -60,7 +60,7 @@
         "brand": "Nike",
         "collection": "shoes",
         "sku": "AIRJ-70",
-        "price": "1500",
+        "price": "18599",
         "image": "nike_hightop.jpg",
         "options": [
             {
