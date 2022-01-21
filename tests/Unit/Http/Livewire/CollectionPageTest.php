@@ -19,8 +19,29 @@ class CollectionPageTest extends TestCase
      */
     public function test_component_can_mount()
     {
-        Livewire::test(CollectionPage::class)
+        $collection = Collection::factory()
+            ->hasUrls(1, [
+                'default' => true,
+            ])->create();
+
+        Livewire::test(CollectionPage::class, ['slug' => $collection->urls->first()->slug])
             ->assertViewIs('livewire.collection-page');
+    }
+
+    /**
+     * Test 404 when slug doesn't exist.
+     *
+     * @return void
+     */
+    public function test_404_if_not_found()
+    {
+        Collection::factory()
+            ->hasUrls(1, [
+                'default' => true,
+            ])->create();
+
+        Livewire::test(CollectionPage::class, ['slug' => 'foobar'])
+            ->assertStatus(404);
     }
 
     /**
@@ -36,7 +57,7 @@ class CollectionPageTest extends TestCase
             ])->create();
 
         Livewire::test(CollectionPage::class, ['slug' => $collection->urls->first()->slug])
-            ->assertSee('<h1>'.$collection->translateAttribute('name').'</h1>')
+            ->assertSeeHtml('<h1>'.$collection->translateAttribute('name').'</h1>')
             ->assertViewIs('livewire.collection-page');
     }
 }
