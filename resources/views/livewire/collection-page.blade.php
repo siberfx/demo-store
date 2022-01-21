@@ -1,3 +1,3 @@
 <div>
-    {{-- Be like water. --}}
+    <h1>{{ $this->collection->translateAttribute('name') }}
 </div>
