@@ -9,7 +9,7 @@ class Navigation extends Component
 {
     public function getCollectionsProperty()
     {
-        return Collection::get()->toTree();
+        return Collection::with(['defaultUrl'])->get()->toTree();
     }
 
     public function render()

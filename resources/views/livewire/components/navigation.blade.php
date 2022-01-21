@@ -8,7 +8,9 @@
 
         <nav class="items-center hidden pl-8 ml-8 space-x-8 text-sm font-medium border-l border-gray-100 md:flex">
           @foreach($this->collections as $collection)
-            <a href="">{{ $collection->translateAttribute('name') }}</a>
+            <a
+                href="{{ route('collection.view', $collection->defaultUrl->slug) }}"
+            >{{ $collection->translateAttribute('name') }}</a>
           @endforeach
         </nav>
       </div>
