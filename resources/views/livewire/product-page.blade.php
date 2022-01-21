@@ -72,25 +72,10 @@
                                 </div>
                             </fieldset>
                         @endforeach
-                        <div class="flex mt-8">
-                            <div>
-                            <label for="quantity" class="sr-only">Qty</label>
-
-                            <input
-                                type="number"
-                                id="quantity"
-                                min="1"
-                                value="1"
-                                class="w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners"
-                            />
-                            </div>
-
-                            <button
-                            type="submit"
-                            class="block px-5 py-3 ml-3 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-500"
-                            >
-                            Add to Cart
-                            </button>
+                        <div class="mt-8">
+                            @livewire('components.add-to-cart', [
+                                'purchasable' => $this->variant,
+                            ], key($this->variant->id))
                         </div>
                     </form>
                 </div>
