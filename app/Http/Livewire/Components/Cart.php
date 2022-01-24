@@ -43,7 +43,7 @@ class Cart extends Component
      */
     public function getCartLinesProperty()
     {
-        return $this->cart->lines;
+        return $this->cart->lines ?? collect();
     }
 
     /**
