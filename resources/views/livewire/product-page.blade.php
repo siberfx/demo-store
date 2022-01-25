@@ -8,8 +8,19 @@
                         <img
                             alt="Mobile Phone Stand"
                             class="object-cover rounded-xl"
-                            src="{{ $this->image }}"
+                            src="{{ $this->image->getUrl('large') }}"
                         />
+                    </div>
+                    <div class="flex space-x-4">
+                    @foreach($this->images as $image)
+                        <div class="aspect-w-1 aspect-h-1" wire:key="image_{{ $image->id }}">
+                            <img
+                                alt="Mobile Phone Stand"
+                                class="object-cover rounded-xl"
+                                src="{{ $image->getUrl('small') }}"
+                            />
+                        </div>
+                    @endforeach
                     </div>
                 </div>
 
