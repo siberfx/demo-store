@@ -31,8 +31,8 @@ class ProductPage extends Component
             Product::class,
             [
                 'element.media',
-                'element.thumbnail',
-                'element.variants.basePrices',
+                'element.variants.basePrices.currency',
+                'element.variants.basePrices.priceable',
                 'element.variants.values.option'
             ]
         );
@@ -98,13 +98,31 @@ class ProductPage extends Component
     }
 
     /**
+     * Return all images for the product.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getImagesProperty()
+    {
+        return $this->product->media;
+    }
+
+    /**
      * Computed property to return current image.
      *
      * @return string
      */
     public function getImageProperty()
     {
-        return $this->product->thumbnail?->getUrl('large');
+        if ($this->variant->thumbnail) {
+            return $this->variant->thumbnail;
+        }
+
+        if ($primary = $this->images->first(fn($media) => $media->getCustomProperty('primary'))) {
+            return $primary;
+        }
+
+        return $this->images->first();
     }
 
     /**
