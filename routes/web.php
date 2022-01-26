@@ -3,6 +3,7 @@
 use App\Http\Livewire\CollectionPage;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\ProductPage;
+use App\Http\Livewire\SearchPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,5 @@ Route::get('/', Home::class);
 Route::get('/collections/{slug}', CollectionPage::class)->name('collection.view');
 
 Route::get('/products/{slug}', ProductPage::class)->name('product.view');
+
+Route::get('search', SearchPage::class)->name('search.view');
