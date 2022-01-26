@@ -2,26 +2,28 @@
 
 namespace App\View\Components;
 
+use GetCandy\Facades\Pricing;
 use GetCandy\Models\Price;
 use GetCandy\Models\Product;
+use GetCandy\Models\ProductVariant;
 use Illuminate\View\Component;
 
 class ProductPrice extends Component
 {
     public ?Price $price = null;
 
+    public ?ProductVariant $variant = null;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Product $product)
+    public function __construct($product = null, $variant = null)
     {
-        $this->price = $product->variants
-            ->pluck('basePrices')
-            ->flatten()
-            ->sortBy('price')
-            ->first();
+        $this->price = Pricing::for(
+            $variant ?: $product->variants->first()
+        )->matched;
     }
 
     /**
