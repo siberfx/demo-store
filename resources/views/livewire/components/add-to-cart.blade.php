@@ -8,6 +8,7 @@
             min="1"
             value="1"
             class="w-16 px-4 py-3 font-bold text-center border-2 border-black"
+            wire:model="quantity"
         />
     </div>
 
