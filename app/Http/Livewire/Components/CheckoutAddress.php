@@ -39,6 +39,8 @@ class CheckoutAddress extends Component
      */
     public CartAddress $address;
 
+    public bool $shippingIsBilling = false;
+
     /**
      * Whether billing is the same as shipping.
      *
