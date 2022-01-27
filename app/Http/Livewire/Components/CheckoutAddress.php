@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Components;
 use GetCandy\Facades\CartSession;
 use GetCandy\Models\Cart;
 use GetCandy\Models\CartAddress;
+use GetCandy\Models\Country;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -44,13 +45,11 @@ class CheckoutAddress extends Component
     public function mount()
     {
         $this->cart = CartSession::getCart();
+
         $this->address = $this->cart->addresses->first(fn($add) => $add->type == $this->type) ?: new CartAddress;
 
-        try {
-            $this->validate();
-        } catch (ValidationException $e) {
-            $this->editing = true;
-        }
+        // If we have an existing ID then it should already be valid and ready to go.
+        $this->editing = (bool) !$this->address->id;
     }
 
     /**
@@ -91,6 +90,13 @@ class CheckoutAddress extends Component
         if ($this->type == 'shipping') {
             $this->cart->getManager()->setShippingAddress($this->address);
         }
+
+        $this->editing = false;
+    }
+
+    public function getCountriesProperty()
+    {
+        return Country::whereIn('iso3', ['GBR', 'USA'])->get();
     }
 
     public function render()
