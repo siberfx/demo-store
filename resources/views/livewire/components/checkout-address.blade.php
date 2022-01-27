@@ -1,6 +1,12 @@
 <form wire:submit.prevent="save" class="border rounded shadow-lg">
-    <div class="p-4 text-xl font-medium border-b">
+    <div class="flex p-4 text-xl font-medium border-b">
         {{ ucfirst($type) }} Details
+        @if($type == 'shipping')
+            <label>
+                <input type="checkbox" value="1" wire:model="shippingIsBilling" />
+                Same as billing
+            </label>
+        @endif
     </div>
     <div class="p-4 space-y-4">
         @if($editing)
@@ -72,6 +78,45 @@
                     </select>
                 </x-input.group>
             </div>
+        @else
+            <dl class="flex">
+                <div class="w-1/2">
+                    <div class="space-y-4">
+                        <div>
+                            <dt class="text-sm font-medium">Name</dt>
+                            <dd>{{ $address->first_name }} {{ $address->last_name }}</dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium">Company</dt>
+                            <dd>{{ $address->company_name }}</dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium">Phone Number</dt>
+                            <dd>{{ $address->contact_phone }}</dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium">Email</dt>
+                            <dd>{{ $address->contact_email }}</dd>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-1/2">
+                    <dt class="text-sm font-medium">Address</dt>
+                    <dd>
+                        {{ $address->line_one }}<br>
+                        @if($address->line_two){{ $address->line_two }}<br>@endif
+                        @if($address->line_three){{ $address->line_three }}<br>@endif
+                        @if($address->city){{ $address->city }}<br>@endif
+                        {{ $address->state }}<br>
+                        {{ $address->postcode }}<br>
+                        {{ $address->country()->first()->native }}
+                    </dd>
+                </div>
+            </dl>
         @endif
     </div>
     <div class="flex justify-end w-full p-4 bg-gray-100">
