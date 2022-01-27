@@ -5,40 +5,46 @@
     <div class="p-4 space-y-4">
         @if($editing)
             <div class="grid grid-cols-2 gap-4">
-                <x-input.group label="First name">
-                    <x-input.text wire:model="address.first_name" />
+                <x-input.group label="First name" :errors="$errors->get('address.first_name')" required>
+                    <x-input.text wire:model="address.first_name" required />
                 </x-input.group>
 
-                <x-input.group label="Last name">
+                <x-input.group label="Last name" :errors="$errors->get('address.last_name')">
                     <x-input.text wire:model="address.last_name" />
                 </x-input.group>
             </div>
 
+            <div>
+                <x-input.group label="Company name" :errors="$errors->get('address.company_name')" required>
+                    <x-input.text wire:model="address.company_name" required />
+                </x-input.group>
+            </div>
+
             <div class="grid grid-cols-3 gap-4">
-                <x-input.group label="Address line 1" required>
-                    <x-input.text wire:model="address.line_one" />
+                <x-input.group label="Address line 1" :errors="$errors->get('address.line_one')" required>
+                    <x-input.text wire:model="address.line_one" required />
                 </x-input.group>
 
-                <x-input.group label="Address line 2">
+                <x-input.group label="Address line 2" :errors="$errors->get('address.line_two')">
                     <x-input.text wire:model="address.line_two" />
                 </x-input.group>
 
-                <x-input.group label="Address line 3">
+                <x-input.group label="Address line 3" :errors="$errors->get('address.line_three')">
                     <x-input.text wire:model="address.line_three" />
                 </x-input.group>
             </div>
 
             <div class="grid grid-cols-3 gap-4">
-                <x-input.group label="City" required>
-                    <x-input.text wire:model="address.city"/>
+                <x-input.group label="City" :errors="$errors->get('address.city')" required>
+                    <x-input.text wire:model="address.city" required />
                 </x-input.group>
 
-                <x-input.group label="State / Province">
+                <x-input.group label="State / Province" :errors="$errors->get('address.state')">
                     <x-input.text wire:model="address.state" />
                 </x-input.group>
 
-                <x-input.group label="Postcode">
-                    <x-input.text wire:model="address.postcode"/>
+                <x-input.group label="Postcode" :errors="$errors->get('address.postcode')" required>
+                    <x-input.text wire:model="address.postcode" required />
                 </x-input.group>
             </div>
 
