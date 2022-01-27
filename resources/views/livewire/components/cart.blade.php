@@ -69,15 +69,19 @@
             @endif
         </div>
         @if($this->cart)
-        <div class="flex justify-between pt-3">
-            <button
-                type="button"
-                class="px-3 py-2 text-sm text-center text-gray-200 uppercase border border-gray-600 rounded-md hover:border-white hover:bg-white hover:text-gray-900"
-                wire:click="updateLines"
-            >
-                Update Cart
-            </button>
-        </div>
+            <div class="flex justify-between pt-3">
+                <button
+                    type="button"
+                    class="px-3 py-2 text-sm text-center text-gray-200 uppercase border border-gray-600 rounded-md hover:border-white hover:bg-white hover:text-gray-900"
+                    wire:click="updateLines"
+                >
+                    Update Cart
+                </button>
+
+                <a href="{{ route('checkout.view') }}" class="px-3 py-2 text-sm text-center text-white uppercase bg-blue-600 rounded-md hover:bg-blue-700">
+                    Checkout
+                </a>
+            </div>
         @endif
     </div>
 </div>
