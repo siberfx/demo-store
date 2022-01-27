@@ -1,6 +1,6 @@
 <form wire:submit.prevent="save" class="border rounded shadow-lg">
     <div class="p-4 text-xl font-medium border-b">
-        {{ ucfirst($type) }} Address
+        {{ ucfirst($type) }} Details
     </div>
     <div class="p-4 space-y-4">
         @if($editing)
@@ -19,6 +19,18 @@
                     <x-input.text wire:model="address.company_name" required />
                 </x-input.group>
             </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <x-input.group label="Contact phone" :errors="$errors->get('address.contact_phone')">
+                    <x-input.text wire:model="address.contact_phone" />
+                </x-input.group>
+
+                <x-input.group label="Contact email" :errors="$errors->get('address.contact_email')">
+                    <x-input.text wire:model="address.contact_email" type="email" />
+                </x-input.group>
+            </div>
+
+            <hr />
 
             <div class="grid grid-cols-3 gap-4">
                 <x-input.group label="Address line 1" :errors="$errors->get('address.line_one')" required>
@@ -66,11 +78,11 @@
         <div>
         @if($editing)
             <button type="submit" wire:key="submit_btn" class="px-5 py-3 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500">
-                Save Address
+                Continue
             </button>
         @else
             <button type="button" wire:key="edit_btn" wire:click.prevent="$set('editing', true)" class="px-5 py-3 font-medium bg-white border rounded-lg shadow-sm hover:bg-gray-50">
-                Edit Address
+                Edit Details
             </button>
         @endif
         </div>
