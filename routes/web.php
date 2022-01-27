@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\CheckoutPage;
 use App\Http\Livewire\CollectionPage;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\ProductPage;
@@ -24,3 +25,5 @@ Route::get('/collections/{slug}', CollectionPage::class)->name('collection.view'
 Route::get('/products/{slug}', ProductPage::class)->name('product.view');
 
 Route::get('search', SearchPage::class)->name('search.view');
+
+Route::get('checkout', CheckoutPage::class)->name('checkout.view');
