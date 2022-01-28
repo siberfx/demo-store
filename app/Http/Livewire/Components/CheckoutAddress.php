@@ -46,7 +46,7 @@ class CheckoutAddress extends Component
      */
     public function mount()
     {
-        $this->cart = CartSession::getCart();
+        $this->cart = CartSession::current();
 
         $this->address = $this->cart->addresses->first(fn($add) => $add->type == $this->type) ?: new CartAddress;
 
