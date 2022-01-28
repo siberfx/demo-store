@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use GetCandy\Facades\CartSession;
+use GetCandy\Facades\ShippingManifest;
 use GetCandy\Models\Cart;
 use Livewire\Component;
 use Livewire\ComponentConcerns\PerformsRedirects;
@@ -19,6 +20,7 @@ class CheckoutPage extends Component
     protected $listeners = [
         'addressUpdated' => 'triggerAddressRefresh',
         'cartUpdated' => 'refreshCart',
+        'selectedShippingOption' => 'refreshCart',
     ];
 
     /**
@@ -31,6 +33,11 @@ class CheckoutPage extends Component
         if (!CartSession::current()) {
             $this->redirect('/');
         }
+        $this->cart = CartSession::getCart();
+    }
+
+    public function hydrate()
+    {
         $this->cart = CartSession::getCart();
     }
 
@@ -57,6 +64,19 @@ class CheckoutPage extends Component
     public function refreshCart()
     {
         $this->cart = CartSession::getCart();
+    }
+
+    public function getShippingOptionProperty()
+    {
+        $shippingAddress = $this->cart->shippingAddress;
+
+        if ($option = $shippingAddress->shipping_option) {
+            return ShippingManifest::getOptions($this->cart)->first(function ($opt) use ($option) {
+                return $opt->getIdentifier() == $option;
+            });
+        }
+
+        return null;
     }
 
     public function render()
