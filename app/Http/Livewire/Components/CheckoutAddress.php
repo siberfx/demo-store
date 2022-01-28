@@ -39,7 +39,16 @@ class CheckoutAddress extends Component
      */
     public CartAddress $address;
 
+    /**
+     * Whether billing is the same as shipping.
+     *
+     * @var boolean
+     */
     public bool $shippingIsBilling = false;
+
+    protected $listeners = [
+        'refreshAddress',
+    ];
 
     /**
      * Whether billing is the same as shipping.
