@@ -23,14 +23,5 @@ class ShippingModifier
                 taxClass: $taxClass
             )
         );
-
-        ShippingManifest::addOption(
-            new ShippingOption(
-                description: 'Express Delivery',
-                identifier: 'EXPDEL',
-                price: new Price(1000, $cart->currency, 1),
-                taxClass: $taxClass
-            )
-        );
     }
 }
