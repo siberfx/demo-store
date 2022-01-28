@@ -91,6 +91,9 @@ class CheckoutAddress extends Component
 
         if ($this->type == 'shipping') {
             $this->cart->getManager()->setShippingAddress($this->address);
+            if ($this->shippingIsBilling) {
+                $this->cart->getManager()->setBillingAddress($this->address);
+            }
         }
 
         $this->editing = false;
