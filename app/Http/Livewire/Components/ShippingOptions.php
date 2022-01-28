@@ -16,21 +16,6 @@ class ShippingOptions extends Component
     public ?string $chosenOption = null;
 
     /**
-     * {@inheritDoc}
-     *
-     * @return void
-     */
-    public function mount()
-    {
-        if ($shippingOption = optional($this->shippingAddress)->shipping_option) {
-            $option = $this->shippingOptions->first(function ($opt) use ($shippingOption) {
-                return $opt->getIdentifier() == $shippingOption;
-            });
-            $this->chosenOption = optional($option)->getIdentifier();
-        }
-    }
-
-    /**
      * Return available shipping options.
      *
      * @return \Illuminate\Support\Collection
@@ -64,8 +49,6 @@ class ShippingOptions extends Component
         $option = $this->shippingOptions->first(fn($option) => $option->getIdentifier() == $this->chosenOption);
 
         CartSession::current()->getManager()->setShippingOption($option);
-
-        $this->emit('selectedShippingOption');
     }
 
     /**
@@ -73,9 +56,9 @@ class ShippingOptions extends Component
      *
      * @return void
      */
-    public function getShippingAddressProperty()
+    public function getHasShippingAddressProperty()
     {
-        return CartSession::getCart()->shippingAddress;
+        return CartSession::current()->shippingAddress()->exists();
     }
 
     public function render()
