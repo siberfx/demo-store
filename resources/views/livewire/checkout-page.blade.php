@@ -6,6 +6,8 @@
                 'type' => 'shipping'
             ])
 
+            @livewire('components.shipping-options')
+
             @livewire('components.checkout-address', [
                 'type' => 'billing'
             ])
