@@ -49,6 +49,8 @@ class ShippingOptions extends Component
         $option = $this->shippingOptions->first(fn($option) => $option->getIdentifier() == $this->chosenOption);
 
         CartSession::current()->getManager()->setShippingOption($option);
+
+        $this->emit('selectedShippingOption');
     }
 
     /**
