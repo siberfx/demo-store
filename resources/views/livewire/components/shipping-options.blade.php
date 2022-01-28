@@ -2,7 +2,7 @@
     <div class="flex justify-between p-4 font-medium">
         <span class="text-xl">Shipping Option</span>
     </div>
-    @if($this->shippingAddress)
+    @if($this->hasShippingAddress)
         <div class="p-4 border-t">
             @foreach($this->shippingOptions as $option)
                 <label class="flex items-center w-full cursor-pointer">
