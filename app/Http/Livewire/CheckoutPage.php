@@ -10,10 +10,18 @@ class CheckoutPage extends Component
 {
     use PerformsRedirects;
 
+    /**
+     * {@inheritDoc}
+     */
     protected $listeners = [
         'addressUpdated' => 'triggerAddressRefresh'
     ];
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return void
+     */
     public function mount()
     {
         if (!CartSession::current()) {
@@ -21,6 +29,11 @@ class CheckoutPage extends Component
         }
     }
 
+    /**
+     * Trigger an event to refresh addresses.
+     *
+     * @return void
+     */
     public function triggerAddressRefresh()
     {
         $this->emit('refreshAddress');
