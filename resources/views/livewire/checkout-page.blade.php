@@ -31,6 +31,15 @@
                     <strong class="block">Sub Total</strong>
                     {{ $cart->subTotal->formatted() }}
                 </div>
+                @if($this->shippingOption)
+                    <div class="flex justify-between pt-4 mt-4 border-t">
+                        <strong class="block">
+                            {{ $this->shippingOption->getDescription() }}
+                        </strong>
+                        {{ $this->shippingOption->getPrice()->formatted() }}
+                    </div>
+
+                @endif
                 @foreach($cart->taxBreakdown as $tax)
                     <div class="flex justify-between pt-4 mt-4 border-t">
                         <strong class="block">{{ $tax['rate']->name }}</strong>
