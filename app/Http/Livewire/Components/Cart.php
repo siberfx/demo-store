@@ -59,6 +59,7 @@ class Cart extends Component
             collect($this->lines)
         );
         $this->mapLines();
+        $this->emit('cartUpdated');
     }
 
     public function removeLine($id)
