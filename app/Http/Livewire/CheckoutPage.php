@@ -30,10 +30,10 @@ class CheckoutPage extends Component
      */
     public function mount()
     {
-        if (!CartSession::current()) {
+        $this->cart = CartSession::getCart();
+        if (!$this->cart) {
             $this->redirect('/');
         }
-        $this->cart = CartSession::getCart();
     }
 
     public function hydrate()
@@ -64,10 +64,6 @@ class CheckoutPage extends Component
     public function getShippingOptionProperty()
     {
         $shippingAddress = $this->cart->shippingAddress;
-
-        if (!$shippingAddress) {
-            return;
-        }
 
         if ($option = $shippingAddress->shipping_option) {
             return ShippingManifest::getOptions($this->cart)->first(function ($opt) use ($option) {
