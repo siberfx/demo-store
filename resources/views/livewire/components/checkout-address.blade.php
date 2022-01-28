@@ -1,8 +1,8 @@
 <form wire:submit.prevent="save" class="border rounded shadow-lg">
-    <div class="flex p-4 text-xl font-medium border-b">
-        {{ ucfirst($type) }} Details
-        @if($type == 'shipping')
-            <label>
+    <div class="flex justify-between p-4 font-medium border-b">
+        <span class="text-xl">{{ ucfirst($type) }} Details</span>
+        @if($type == 'shipping' && $editing)
+            <label class="text-sm">
                 <input type="checkbox" value="1" wire:model="shippingIsBilling" />
                 Same as billing
             </label>
