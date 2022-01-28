@@ -39,7 +39,16 @@ class CheckoutAddress extends Component
      */
     public CartAddress $address;
 
+    /**
+     * Whether billing is the same as shipping.
+     *
+     * @var boolean
+     */
     public bool $shippingIsBilling = false;
+
+    protected $listeners = [
+        'refreshAddress',
+    ];
 
     /**
      * {@inheritDoc}
@@ -83,7 +92,7 @@ class CheckoutAddress extends Component
      */
     public function save()
     {
-        $this->validate();
+        $validatedData = $this->validate();
 
         if ($this->type == 'billing') {
             $this->cart->getManager()->setBillingAddress($this->address);
@@ -92,11 +101,30 @@ class CheckoutAddress extends Component
         if ($this->type == 'shipping') {
             $this->cart->getManager()->setShippingAddress($this->address);
             if ($this->shippingIsBilling) {
-                $this->cart->getManager()->setBillingAddress($this->address);
+                // Do we already have a billing address?
+                if ($billing = $this->cart->billingAddress) {
+                    $billing->fill($validatedData['address']);
+                    $this->cart->getManager()->setBillingAddress($billing);
+                } else {
+                    $address = $this->address->only(
+                        $this->address->getFillable()
+                    );
+                    $this->cart->getManager()->setBillingAddress($address);
+                }
             }
         }
 
         $this->editing = false;
+
+        $this->emitUp('addressUpdated');
+    }
+
+    public function refreshAddress()
+    {
+        if ($address = $this->cart->addresses()->whereType($this->type)->first()) {
+            $this->address = $address;
+            $this->editing = false;
+        }
     }
 
     public function getCountriesProperty()
