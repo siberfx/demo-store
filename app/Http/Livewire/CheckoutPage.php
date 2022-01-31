@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use GetCandy\Facades\CartSession;
 use GetCandy\Facades\ShippingManifest;
 use GetCandy\Models\Cart;
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\ComponentConcerns\PerformsRedirects;
 
@@ -66,10 +65,6 @@ class CheckoutPage extends Component
     {
         $shippingAddress = $this->cart->shippingAddress;
 
-        if (!$shippingAddress) {
-            return;
-        }
-
         if ($option = $shippingAddress->shipping_option) {
             return ShippingManifest::getOptions($this->cart)->first(function ($opt) use ($option) {
                 return $opt->getIdentifier() == $option;
@@ -86,10 +81,9 @@ class CheckoutPage extends Component
 
         $order->update([
             'placed_at' => now(),
-            'status' => 'paid',
         ]);
 
-        return redirect()->route('checkout-success.view');
+        $this->redirect('checkout/success');
     }
 
     public function render()
