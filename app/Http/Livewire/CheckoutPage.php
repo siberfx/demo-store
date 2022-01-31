@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use GetCandy\Facades\CartSession;
 use GetCandy\Facades\ShippingManifest;
 use GetCandy\Models\Cart;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\ComponentConcerns\PerformsRedirects;
 
@@ -81,9 +82,10 @@ class CheckoutPage extends Component
 
         $order->update([
             'placed_at' => now(),
+            'status' => 'paid',
         ]);
 
-        $this->redirect('checkout/success');
+        return redirect()->route('checkout-success.view');
     }
 
     public function render()
