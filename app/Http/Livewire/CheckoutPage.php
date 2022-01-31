@@ -34,6 +34,11 @@ class CheckoutPage extends Component
         $this->cart = CartSession::getCart();
     }
 
+    public function hydrate()
+    {
+        $this->cart = CartSession::getCart();
+    }
+
     /**
      * Trigger an event to refresh addresses.
      *
@@ -51,7 +56,7 @@ class CheckoutPage extends Component
      */
     public function refreshCart()
     {
-        $this->cart = CartSession::current();
+        $this->cart = CartSession::getCart();
     }
 
     public function render()
