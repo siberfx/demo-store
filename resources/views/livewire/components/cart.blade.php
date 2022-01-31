@@ -1,5 +1,5 @@
 <div class="relative" x-data="{
-    linesVisible: false
+    linesVisible: @entangle('linesVisible')
 }">
     <button
         class="inline-flex flex-col items-center justify-center w-16 h-16"
