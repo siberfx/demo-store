@@ -14,8 +14,10 @@ class Cart extends Component
      */
     public array $lines;
 
+    public bool $linesVisible = false;
+
     protected $listeners = [
-        'add-to-cart' => 'mapLines',
+        'add-to-cart' => 'handleAddToCart',
     ];
 
     /**
@@ -86,6 +88,12 @@ class Cart extends Component
                 'sub_total' => $line->subTotal->formatted(),
             ];
         })->toArray();
+    }
+
+    public function handleAddToCart()
+    {
+        $this->mapLines();
+        $this->linesVisible = true;
     }
 
     public function render()
