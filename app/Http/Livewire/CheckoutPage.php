@@ -65,6 +65,10 @@ class CheckoutPage extends Component
     {
         $shippingAddress = $this->cart->shippingAddress;
 
+        if (!$shippingAddress) {
+            return;
+        }
+
         if ($option = $shippingAddress->shipping_option) {
             return ShippingManifest::getOptions($this->cart)->first(function ($opt) use ($option) {
                 return $opt->getIdentifier() == $option;
