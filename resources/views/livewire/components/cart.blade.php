@@ -19,7 +19,7 @@
 
         <span class="block mt-1 text-xs font-medium">Cart</span>
     </button>
-    <div class="absolute right-0 z-50 p-4 bg-gray-900 rounded-b shadow w-96" x-show="linesVisible" x-on:click.away="linesVisible = false">
+    <div class="absolute right-0 z-50 p-4 bg-gray-900 rounded-b shadow w-96" x-show="linesVisible" x-on:click.away="linesVisible = false" x-cloak>
 
         <div class="p-4 space-y-2 text-sm bg-white rounded">
             @if($this->cart)
