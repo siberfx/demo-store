@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use GetCandy\Facades\CartSession;
 use GetCandy\Facades\ShippingManifest;
 use GetCandy\Models\Cart;
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\ComponentConcerns\PerformsRedirects;
 
@@ -31,10 +30,10 @@ class CheckoutPage extends Component
      */
     public function mount()
     {
-        if (!CartSession::current()) {
+        $this->cart = CartSession::getCart();
+        if (!$this->cart) {
             $this->redirect('/');
         }
-        $this->cart = CartSession::getCart();
     }
 
     public function hydrate()
@@ -82,10 +81,9 @@ class CheckoutPage extends Component
 
         $order->update([
             'placed_at' => now(),
-            'status' => 'paid',
         ]);
 
-        return redirect()->route('checkout-success.view');
+        $this->redirect('checkout/success');
     }
 
     public function render()
