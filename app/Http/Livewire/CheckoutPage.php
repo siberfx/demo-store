@@ -28,10 +28,10 @@ class CheckoutPage extends Component
      */
     public function mount()
     {
-        $this->cart = CartSession::current();
-        if (!$this->cart) {
+        if (!CartSession::current()) {
             $this->redirect('/');
         }
+        $this->cart = CartSession::getCart();
     }
 
     /**
