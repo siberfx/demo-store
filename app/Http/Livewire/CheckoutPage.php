@@ -74,6 +74,18 @@ class CheckoutPage extends Component
         return null;
     }
 
+    public function checkout()
+    {
+        // Create the order or sutin.
+        $order = $this->cart->getManager()->createOrder();
+
+        $order->update([
+            'placed_at' => now(),
+        ]);
+
+        $this->redirect('checkout/success');
+    }
+
     public function render()
     {
         return view('livewire.checkout-page');
