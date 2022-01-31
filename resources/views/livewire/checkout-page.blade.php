@@ -11,6 +11,8 @@
             @livewire('components.checkout-address', [
                 'type' => 'billing'
             ])
+
+            <button wire:click="checkout">Checkout</button>
         </div>
         <div class="w-1/3 ml-12">
             <h3 class="font-bold">Order Summary</h3>
