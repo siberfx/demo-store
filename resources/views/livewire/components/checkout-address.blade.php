@@ -3,7 +3,7 @@
         <span class="text-xl">{{ ucfirst($type) }} Details</span>
         @if($type == 'shipping' && $editing)
             <label class="text-sm">
-                <input type="checkbox" value="1" wire:model="shippingIsBilling" />
+                <input type="checkbox" value="1" wire:model.defer="shippingIsBilling" />
                 Same as billing
             </label>
         @endif
@@ -12,27 +12,27 @@
         @if($editing)
             <div class="grid grid-cols-2 gap-4">
                 <x-input.group label="First name" :errors="$errors->get('address.first_name')" required>
-                    <x-input.text wire:model="address.first_name" required />
+                    <x-input.text wire:model.defer="address.first_name" required />
                 </x-input.group>
 
                 <x-input.group label="Last name" :errors="$errors->get('address.last_name')">
-                    <x-input.text wire:model="address.last_name" />
+                    <x-input.text wire:model.defer="address.last_name" />
                 </x-input.group>
             </div>
 
             <div>
                 <x-input.group label="Company name" :errors="$errors->get('address.company_name')" required>
-                    <x-input.text wire:model="address.company_name" required />
+                    <x-input.text wire:model.defer="address.company_name" required />
                 </x-input.group>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <x-input.group label="Contact phone" :errors="$errors->get('address.contact_phone')">
-                    <x-input.text wire:model="address.contact_phone" />
+                    <x-input.text wire:model.defer="address.contact_phone" />
                 </x-input.group>
 
                 <x-input.group label="Contact email" :errors="$errors->get('address.contact_email')">
-                    <x-input.text wire:model="address.contact_email" type="email" />
+                    <x-input.text wire:model.defer="address.contact_email" type="email" />
                 </x-input.group>
             </div>
 
@@ -40,35 +40,35 @@
 
             <div class="grid grid-cols-3 gap-4">
                 <x-input.group label="Address line 1" :errors="$errors->get('address.line_one')" required>
-                    <x-input.text wire:model="address.line_one" required />
+                    <x-input.text wire:model.defer="address.line_one" required />
                 </x-input.group>
 
                 <x-input.group label="Address line 2" :errors="$errors->get('address.line_two')">
-                    <x-input.text wire:model="address.line_two" />
+                    <x-input.text wire:model.defer="address.line_two" />
                 </x-input.group>
 
                 <x-input.group label="Address line 3" :errors="$errors->get('address.line_three')">
-                    <x-input.text wire:model="address.line_three" />
+                    <x-input.text wire:model.defer="address.line_three" />
                 </x-input.group>
             </div>
 
             <div class="grid grid-cols-3 gap-4">
                 <x-input.group label="City" :errors="$errors->get('address.city')" required>
-                    <x-input.text wire:model="address.city" required />
+                    <x-input.text wire:model.defer="address.city" required />
                 </x-input.group>
 
                 <x-input.group label="State / Province" :errors="$errors->get('address.state')">
-                    <x-input.text wire:model="address.state" />
+                    <x-input.text wire:model.defer="address.state" />
                 </x-input.group>
 
                 <x-input.group label="Postcode" :errors="$errors->get('address.postcode')" required>
-                    <x-input.text wire:model="address.postcode" required />
+                    <x-input.text wire:model.defer="address.postcode" required />
                 </x-input.group>
             </div>
 
             <div>
                 <x-input.group label="Country" required>
-                    <select class="w-full p-4 text-sm border-2 border-gray-200 rounded-lg" wire:model="address.country_id">
+                    <select class="w-full p-4 text-sm border-2 border-gray-200 rounded-lg" wire:model.defer="address.country_id">
                         <option value>Select a country</option>
                         @foreach($this->countries as $country)
                             <option value="{{ $country->id }}" wire:key="country_{{ $country->id }}">
