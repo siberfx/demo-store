@@ -48,34 +48,13 @@ class CheckoutPage extends Component
      */
     public function rules()
     {
-        return [
-            'shipping.first_name' => 'required',
-            'shipping.last_name' => 'required',
-            'shipping.line_one' => 'required',
-            'shipping.country_id' => 'required',
-            'shipping.city' => 'required',
-            'shipping.postcode' => 'required',
-            'shipping.company_name' => 'nullable',
-            'shipping.line_two' => 'nullable',
-            'shipping.line_three' => 'nullable',
-            'shipping.state' => 'nullable',
-            'shipping.delivery_instructions' => 'nullable',
-            'shipping.contact_email' => 'nullable|email',
-            'shipping.contact_phone' => 'nullable',
-            'billing.first_name' => 'required',
-            'billing.last_name' => 'required',
-            'billing.line_one' => 'required',
-            'billing.country_id' => 'required',
-            'billing.city' => 'required',
-            'billing.postcode' => 'required',
-            'billing.company_name' => 'nullable',
-            'billing.line_two' => 'nullable',
-            'billing.line_three' => 'nullable',
-            'billing.state' => 'nullable',
-            'billing.delivery_instructions' => 'nullable',
-            'billing.contact_email' => 'nullable|email',
-            'billing.contact_phone' => 'nullable',
-        ];
+        return array_merge(
+            $this->getAddressValidation('shipping'),
+            $this->getAddressValidation('billing'),
+            [
+                'shippingIsBilling' => true
+            ]
+        );
     }
 
     /**
@@ -89,6 +68,10 @@ class CheckoutPage extends Component
             $this->redirect('/');
         }
         $this->cart = CartSession::getCart();
+
+        // Do we have a shipping address?
+        $this->shipping = $this->cart->shippingAddress ?: new CartAddress;
+        $this->billing = $this->cart->billingAddress ?: new CartAddress;
     }
 
     public function hydrate()
@@ -133,6 +116,36 @@ class CheckoutPage extends Component
         return null;
     }
 
+    public function saveAddress($type)
+    {
+        $this->validate(
+            $this->getAddressValidation($type)
+        );
+
+        $address = $this->{$type};
+
+
+        if ($type == 'billing') {
+            $this->cart->getManager()->setBillingAddress($address);
+        }
+
+        if ($type == 'shipping') {
+            $this->cart->getManager()->setShippingAddress($address);
+            // if ($this->shippingIsBilling) {
+            //     // Do we already have a billing address?
+            //     if ($billing = $this->cart->billingAddress) {
+            //         $billing->fill($validatedData['address']);
+            //         $this->cart->getManager()->setBillingAddress($billing);
+            //     } else {
+            //         $address = $this->address->only(
+            //             $this->address->getFillable()
+            //         );
+            //         $this->cart->getManager()->setBillingAddress($address);
+            //     }
+            // }
+        }
+    }
+
     public function checkout()
     {
         // Create the order or sutin.
@@ -154,6 +167,31 @@ class CheckoutPage extends Component
     public function getCountriesProperty()
     {
         return Country::whereIn('iso3', ['GBR', 'USA'])->get();
+    }
+
+    /**
+     * Return the address validation rules for a given type.
+     *
+     * @param string $type
+     * @return array
+     */
+    protected function getAddressValidation($type)
+    {
+        return [
+            "{$type}.first_name" => 'required',
+            "{$type}.last_name" => 'required',
+            "{$type}.line_one" => 'required',
+            "{$type}.country_id" => 'required',
+            "{$type}.city" => 'required',
+            "{$type}.postcode" => 'required',
+            "{$type}.company_name" => 'nullable',
+            "{$type}.line_two" => 'nullable',
+            "{$type}.line_three" => 'nullable',
+            "{$type}.state" => 'nullable',
+            "{$type}.delivery_instructions" => 'nullable',
+            "{$type}.contact_email" => 'nullable|email',
+            "{$type}.contact_phone" => 'nullable',
+        ];
     }
 
     public function render()
