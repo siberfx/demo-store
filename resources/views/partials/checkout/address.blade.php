@@ -9,7 +9,7 @@
         @endif
     </div>
     <div class="p-4 space-y-4">
-        @if(true)
+        @if($step == $currentStep)
             <div class="grid grid-cols-2 gap-4">
                 <x-input.group label="First name" :errors="$errors->get($type.'.first_name')" required>
                     <x-input.text wire:model.defer="{{ $type }}.first_name" required />
@@ -84,22 +84,22 @@
                     <div class="space-y-4">
                         <div>
                             <dt class="text-sm font-medium">Name</dt>
-                            <dd>{{ $address->first_name }} {{ $address->last_name }}</dd>
+                            <dd>{{ $this->{$type}->first_name }} {{ $this->{$type}->last_name }}</dd>
                         </div>
 
                         <div>
                             <dt class="text-sm font-medium">Company</dt>
-                            <dd>{{ $address->company_name }}</dd>
+                            <dd>{{ $this->{$type}->company_name }}</dd>
                         </div>
 
                         <div>
                             <dt class="text-sm font-medium">Phone Number</dt>
-                            <dd>{{ $address->contact_phone }}</dd>
+                            <dd>{{ $this->{$type}->contact_phone }}</dd>
                         </div>
 
                         <div>
                             <dt class="text-sm font-medium">Email</dt>
-                            <dd>{{ $address->contact_email }}</dd>
+                            <dd>{{ $this->{$type}->contact_email }}</dd>
                         </div>
                     </div>
                 </div>
@@ -107,21 +107,27 @@
                 <div class="w-1/2">
                     <dt class="text-sm font-medium">Address</dt>
                     <dd>
-                        {{ $address->line_one }}<br>
-                        @if($address->line_two){{ $address->line_two }}<br>@endif
-                        @if($address->line_three){{ $address->line_three }}<br>@endif
-                        @if($address->city){{ $address->city }}<br>@endif
-                        {{ $address->state }}<br>
-                        {{ $address->postcode }}<br>
-                        {{ $address->country()->first()->native }}
+                        {{ $this->{$type}->line_one }}<br>
+                        @if($this->{$type}->line_two){{ $this->{$type}->line_two }}<br>@endif
+                        @if($this->{$type}->line_three){{ $this->{$type}->line_three }}<br>@endif
+                        @if($this->{$type}->city){{ $this->{$type}->city }}<br>@endif
+                        {{ $this->{$type}->state }}<br>
+                        {{ $this->{$type}->postcode }}<br>
+                        {{ $this->{$type}->country()->first()->native }}
                     </dd>
                 </div>
             </dl>
         @endif
     </div>
     <div class="flex justify-end w-full p-4 bg-gray-100">
-        <button type="submit" wire:key="submit_btn" class="px-5 py-3 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500">
-            Continue
-        </button>
+        @if($step == $currentStep)
+            <button type="submit" wire:key="submit_btn" class="px-5 py-3 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500">
+                Continue
+            </button>
+        @else
+            <button type="button" wire:click.prevent="$set('currentStep', {{ $step }})" class="px-5 py-3 font-medium text-gray-600 rounded-lg bg-gray-50 hover:bg-gray-500">
+                Edit
+            </button>
+        @endif
     </div>
 </form>
