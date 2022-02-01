@@ -40,7 +40,26 @@ class CheckoutPage extends Component
      *
      * @var integer
      */
-    public int $step = 1;
+    public int $currentStep = 1;
+
+    /**
+     * Whether the shipping address is the billing address too.
+     *
+     * @var boolean
+     */
+    public bool $shippingIsBilling = true;
+
+    /**
+     * The checkout steps.
+     *
+     * @var array
+     */
+    public array $steps = [
+        'shipping_address' => 1,
+        'shipping_option' => 2,
+        'billing_address' => 3,
+        'payment_details' => 4,
+    ];
 
     /**
      * {@inheritDoc}
@@ -78,9 +97,15 @@ class CheckoutPage extends Component
 
         // Do we have a shipping address?
         $this->shipping = $this->cart->shippingAddress ?: new CartAddress;
+
         $this->billing = $this->cart->billingAddress ?: new CartAddress;
+
+        $this->determineCheckoutStep();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function hydrate()
     {
         $this->cart = CartSession::getCart();
@@ -94,6 +119,18 @@ class CheckoutPage extends Component
     public function triggerAddressRefresh()
     {
         $this->emit('refreshAddress');
+    }
+
+    /**
+     * Determines what checkout step we should be at.
+     *
+     * @return void
+     */
+    public function determineCheckoutStep()
+    {
+        if ($this->shipping->id) {
+            $this->step = $this->steps['shipping_address']++;
+        }
     }
 
     /**
@@ -123,9 +160,15 @@ class CheckoutPage extends Component
         return null;
     }
 
+    /**
+     * Save the address for a given type.
+     *
+     * @param string $type
+     * @return void
+     */
     public function saveAddress($type)
     {
-        $this->validate(
+        $validatedData = $this->validate(
             $this->getAddressValidation($type)
         );
 
@@ -138,19 +181,21 @@ class CheckoutPage extends Component
 
         if ($type == 'shipping') {
             $this->cart->getManager()->setShippingAddress($address);
-            // if ($this->shippingIsBilling) {
-            //     // Do we already have a billing address?
-            //     if ($billing = $this->cart->billingAddress) {
-            //         $billing->fill($validatedData['address']);
-            //         $this->cart->getManager()->setBillingAddress($billing);
-            //     } else {
-            //         $address = $this->address->only(
-            //             $this->address->getFillable()
-            //         );
-            //         $this->cart->getManager()->setBillingAddress($address);
-            //     }
-            // }
+            if ($this->shippingIsBilling) {
+                // Do we already have a billing address?
+                if ($billing = $this->cart->billingAddress) {
+                    $billing->fill($validatedData['shipping']);
+                    $this->cart->getManager()->setBillingAddress($billing);
+                } else {
+                    $address = $address->only(
+                        $address->getFillable()
+                    );
+                    $this->cart->getManager()->setBillingAddress($address);
+                }
+            }
         }
+
+        $this->determineCheckoutStep();
     }
 
     public function checkout()
