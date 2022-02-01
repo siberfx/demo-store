@@ -2,15 +2,19 @@
   <div class="relative max-w-screen-xl px-4 py-8 mx-auto">
     <div class="flex">
         <div class="space-y-6 grow">
-            @livewire('components.checkout-address', [
+            {{-- @livewire('components.checkout-address', [
                 'type' => 'shipping'
+            ]) --}}
+
+            @include('partials.checkout.address', [
+                'type' => 'shipping',
             ])
 
             @livewire('components.shipping-options')
 
-            @livewire('components.checkout-address', [
+            {{-- @livewire('components.checkout-address', [
                 'type' => 'billing'
-            ])
+            ]) --}}
 
             <button wire:click="checkout">Checkout</button>
         </div>
