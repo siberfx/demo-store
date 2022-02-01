@@ -1,4 +1,4 @@
-<form wire:submit.prevent="save" class="border rounded shadow-lg">
+<form wire:submit.prevent="saveAddress('{{ $type }}')" class="border rounded shadow-lg">
     <div class="flex justify-between p-4 font-medium border-b">
         <span class="text-xl">{{ ucfirst($type) }} Details</span>
         @if($type == 'shipping')
@@ -11,27 +11,27 @@
     <div class="p-4 space-y-4">
         @if(true)
             <div class="grid grid-cols-2 gap-4">
-                <x-input.group label="First name" :errors="$errors->get('address.first_name')" required>
+                <x-input.group label="First name" :errors="$errors->get($type.'.first_name')" required>
                     <x-input.text wire:model.defer="{{ $type }}.first_name" required />
                 </x-input.group>
 
-                <x-input.group label="Last name" :errors="$errors->get('address.last_name')">
+                <x-input.group label="Last name" :errors="$errors->get($type.'.last_name')">
                     <x-input.text wire:model.defer="{{ $type }}.last_name" />
                 </x-input.group>
             </div>
 
             <div>
-                <x-input.group label="Company name" :errors="$errors->get('address.company_name')" required>
+                <x-input.group label="Company name" :errors="$errors->get($type.'.company_name')" required>
                     <x-input.text wire:model.defer="{{ $type }}.company_name" required />
                 </x-input.group>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-                <x-input.group label="Contact phone" :errors="$errors->get('address.contact_phone')">
+                <x-input.group label="Contact phone" :errors="$errors->get($type.'.contact_phone')">
                     <x-input.text wire:model.defer="{{ $type }}.contact_phone" />
                 </x-input.group>
 
-                <x-input.group label="Contact email" :errors="$errors->get('address.contact_email')">
+                <x-input.group label="Contact email" :errors="$errors->get($type.'.contact_email')">
                     <x-input.text wire:model.defer="{{ $type }}.contact_email" type="email" />
                 </x-input.group>
             </div>
@@ -39,29 +39,29 @@
             <hr />
 
             <div class="grid grid-cols-3 gap-4">
-                <x-input.group label="Address line 1" :errors="$errors->get('address.line_one')" required>
+                <x-input.group label="Address line 1" :errors="$errors->get($type.'.line_one')" required>
                     <x-input.text wire:model.defer="{{ $type }}.line_one" required />
                 </x-input.group>
 
-                <x-input.group label="Address line 2" :errors="$errors->get('address.line_two')">
+                <x-input.group label="Address line 2" :errors="$errors->get($type.'.line_two')">
                     <x-input.text wire:model.defer="{{ $type }}.line_two" />
                 </x-input.group>
 
-                <x-input.group label="Address line 3" :errors="$errors->get('address.line_three')">
+                <x-input.group label="Address line 3" :errors="$errors->get($type.'.line_three')">
                     <x-input.text wire:model.defer="{{ $type }}.line_three" />
                 </x-input.group>
             </div>
 
             <div class="grid grid-cols-3 gap-4">
-                <x-input.group label="City" :errors="$errors->get('address.city')" required>
+                <x-input.group label="City" :errors="$errors->get($type.'.city')" required>
                     <x-input.text wire:model.defer="{{ $type }}.city" required />
                 </x-input.group>
 
-                <x-input.group label="State / Province" :errors="$errors->get('address.state')">
+                <x-input.group label="State / Province" :errors="$errors->get($type.'.state')">
                     <x-input.text wire:model.defer="{{ $type }}.state" />
                 </x-input.group>
 
-                <x-input.group label="Postcode" :errors="$errors->get('address.postcode')" required>
+                <x-input.group label="Postcode" :errors="$errors->get($type.'.postcode')" required>
                     <x-input.text wire:model.defer="{{ $type }}.postcode" required />
                 </x-input.group>
             </div>
@@ -120,16 +120,8 @@
         @endif
     </div>
     <div class="flex justify-end w-full p-4 bg-gray-100">
-        <div>
-        {{-- @if($editing)
-            <button type="submit" wire:key="submit_btn" class="px-5 py-3 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500">
-                Continue
-            </button>
-        @else
-            <button type="button" wire:key="edit_btn" wire:click.prevent="$set('editing', true)" class="px-5 py-3 font-medium bg-white border rounded-lg shadow-sm hover:bg-gray-50">
-                Edit Details
-            </button>
-        @endif --}}
-        </div>
+        <button type="submit" wire:key="submit_btn" class="px-5 py-3 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500">
+            Continue
+        </button>
     </div>
 </form>
