@@ -143,6 +143,11 @@ class CheckoutPage extends Component
         $this->cart = CartSession::getCart();
     }
 
+    /**
+     * Return the shipping option.
+     *
+     * @return void
+     */
     public function getShippingOptionProperty()
     {
         $shippingAddress = $this->cart->shippingAddress;
@@ -219,6 +224,18 @@ class CheckoutPage extends Component
     public function getCountriesProperty()
     {
         return Country::whereIn('iso3', ['GBR', 'USA'])->get();
+    }
+
+    /**
+     * Return available shipping options.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getShippingOptionsProperty()
+    {
+        return ShippingManifest::getOptions(
+            CartSession::current()
+        );
     }
 
     /**
