@@ -10,6 +10,10 @@
                 'type' => 'shipping',
                 'step' => $steps['shipping_address'],
             ])
+
+            @include('partials.checkout.shipping_option', [
+                'step' => $steps['shipping_option'],
+            ])
 {{--
             @livewire('components.shipping-options') --}}
 
