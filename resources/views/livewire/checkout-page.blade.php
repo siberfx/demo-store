@@ -8,6 +8,7 @@
 
             @include('partials.checkout.address', [
                 'type' => 'shipping',
+                'step' => $steps['shipping_address'],
             ])
 {{--
             @livewire('components.shipping-options') --}}
