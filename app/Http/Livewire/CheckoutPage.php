@@ -36,6 +36,13 @@ class CheckoutPage extends Component
     public ?CartAddress $billing = null;
 
     /**
+     * The current checkout step.
+     *
+     * @var integer
+     */
+    public int $step = 1;
+
+    /**
      * {@inheritDoc}
      */
     protected $listeners = [
