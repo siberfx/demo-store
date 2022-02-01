@@ -1,7 +1,7 @@
 <form wire:submit.prevent="saveAddress('{{ $type }}')" class="border rounded shadow-lg">
     <div class="flex justify-between p-4 font-medium border-b">
         <span class="text-xl">{{ ucfirst($type) }} Details</span>
-        @if($type == 'shipping')
+        @if($type == 'shipping' && $step == $currentStep)
             <label class="text-sm">
                 <input type="checkbox" value="1" wire:model.defer="shippingIsBilling" />
                 Same as billing
