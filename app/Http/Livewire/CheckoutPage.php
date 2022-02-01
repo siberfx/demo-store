@@ -129,7 +129,7 @@ class CheckoutPage extends Component
     public function determineCheckoutStep()
     {
         if ($this->shipping->id) {
-            $this->step = $this->steps['shipping_address']++;
+            $this->currentStep = $this->steps['shipping_address'] + 1;
         }
     }
 
