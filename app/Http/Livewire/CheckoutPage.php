@@ -50,6 +50,13 @@ class CheckoutPage extends Component
     public bool $shippingIsBilling = true;
 
     /**
+     * The chosen shipping option.
+     *
+     * @var string|int
+     */
+    public $chosenShipping = null;
+
+    /**
      * The checkout steps.
      *
      * @var array
@@ -78,7 +85,8 @@ class CheckoutPage extends Component
             $this->getAddressValidation('shipping'),
             $this->getAddressValidation('billing'),
             [
-                'shippingIsBilling' => true
+                'shippingIsBilling' => 'boolean',
+                'chosenShipping' => 'required',
             ]
         );
     }
@@ -90,10 +98,9 @@ class CheckoutPage extends Component
      */
     public function mount()
     {
-        if (!CartSession::current()) {
+        if (!$this->cart = CartSession::current()) {
             $this->redirect('/');
         }
-        $this->cart = CartSession::getCart();
 
         // Do we have a shipping address?
         $this->shipping = $this->cart->shippingAddress ?: new CartAddress;
@@ -199,6 +206,20 @@ class CheckoutPage extends Component
                 }
             }
         }
+
+        $this->determineCheckoutStep();
+    }
+
+    /**
+     * Save the selected shipping option.
+     *
+     * @return void
+     */
+    public function saveShippingOption()
+    {
+        $option = $this->shippingOptions->first(fn($option) => $option->getIdentifier() == $this->chosenShipping);
+
+        CartSession::current()->getManager()->setShippingOption($option);
 
         $this->determineCheckoutStep();
     }
