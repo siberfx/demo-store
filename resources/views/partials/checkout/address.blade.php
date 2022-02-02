@@ -1,6 +1,6 @@
 <form wire:submit.prevent="saveAddress('{{ $type }}')" class="border rounded shadow-lg">
-    <div class="flex justify-between p-4 font-medium border-b">
-        <span class="text-xl">{{ ucfirst($type) }} Details</span>
+    <div class="flex justify-between p-4 font-medium @if($currentStep < $step) text-gray-500 @else border-b @endif">
+        <span class="text-xl ">{{ ucfirst($type) }} Details</span>
         @if($type == 'shipping' && $step == $currentStep)
             <label class="text-sm">
                 <input type="checkbox" value="1" wire:model.defer="shippingIsBilling" />
@@ -8,6 +8,7 @@
             </label>
         @endif
     </div>
+    @if($currentStep >= $step)
     <div class="p-4 space-y-4">
         @if($step == $currentStep)
             <div class="grid grid-cols-2 gap-4">
@@ -78,7 +79,7 @@
                     </select>
                 </x-input.group>
             </div>
-        @else
+        @elseif($currentStep > $step)
             <dl class="flex">
                 <div class="w-1/2">
                     <div class="space-y-4">
@@ -113,7 +114,7 @@
                         @if($this->{$type}->city){{ $this->{$type}->city }}<br>@endif
                         {{ $this->{$type}->state }}<br>
                         {{ $this->{$type}->postcode }}<br>
-                        {{ $this->{$type}->country()->first()->native }}
+                        {{ $this->{$type}->country?->native }}
                     </dd>
                 </div>
             </dl>
@@ -144,4 +145,5 @@
             </button>
         @endif
     </div>
+    @endif
 </form>
