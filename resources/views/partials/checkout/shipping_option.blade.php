@@ -1,4 +1,4 @@
-<form wire:submit.prevent="save" class="border rounded shadow-lg">
+<form wire:submit.prevent="saveShippingOption" class="border rounded shadow-lg">
     <div class="flex justify-between p-4 font-medium">
         <span class="text-xl">Shipping Option</span>
     </div>
@@ -6,7 +6,7 @@
         <div class="p-4 border-t">
             @foreach($this->shippingOptions as $option)
                 <label class="flex items-center w-full cursor-pointer">
-                    <input type="radio" wire:model="chosenOption" value="{{ $option->getIdentifier() }}" />
+                    <input type="radio" wire:model="chosenShipping" value="{{ $option->getIdentifier() }}" />
                     <div class="flex items-center block ml-2">
                         <span class="block mr-2 text-2xl">{{ $option->getPrice()->formatted() }}</span>
                         {{ $option->getDescription() }}
@@ -14,8 +14,8 @@
                 </label>
             @endforeach
         </div>
-    @if($errors->has('chosenOption'))
-        <p class="p-4 text-sm text-red-500">{{ $errors->first('chosenOption') }}</p>
+    @if($errors->has('chosenShipping'))
+        <p class="p-4 text-sm text-red-500">{{ $errors->first('chosenShipping') }}</p>
     @endif
     <div class="flex justify-end w-full p-4 bg-gray-100">
         <div>
