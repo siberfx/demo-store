@@ -31,8 +31,8 @@ class CollectionPage extends Component
             ->whereDefault(true)
             ->whereSlug($slug)
             ->with([
-                'element.thumbnail',
-                'element.products.variants.basePrices'
+                'element.products.thumbnail',
+                'element.products.variants',
             ])->first();
 
         if (!$this->url) {
