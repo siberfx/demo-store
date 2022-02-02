@@ -66,6 +66,7 @@ class CheckoutPage extends Component
         'shipping_option' => 2,
         'billing_address' => 3,
         'payment_details' => 4,
+        'payment' => 5,
     ];
 
     /**
