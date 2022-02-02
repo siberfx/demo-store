@@ -2,7 +2,6 @@
   <div class="relative max-w-screen-xl px-4 py-8 mx-auto">
     <div class="flex">
         <div class="space-y-6 grow">
-            {{ $currentStep }}
             @include('partials.checkout.address', [
                 'type' => 'shipping',
                 'step' => $steps['shipping_address'],
