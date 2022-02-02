@@ -2,6 +2,7 @@
   <div class="relative max-w-screen-xl px-4 py-8 mx-auto">
     <div class="flex">
         <div class="space-y-6 grow">
+            {{ $currentStep }}
             @include('partials.checkout.address', [
                 'type' => 'shipping',
                 'step' => $steps['shipping_address'],
@@ -16,7 +17,9 @@
                 'step' => $steps['billing_address'],
             ])
 
-            <button wire:click="checkout">Checkout</button>
+            @include('partials.checkout.payment', [
+                'step' => $steps['payment']
+            ])
         </div>
         <div class="w-1/3 ml-12">
             <h3 class="font-bold">Order Summary</h3>
