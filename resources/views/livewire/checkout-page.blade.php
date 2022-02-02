@@ -10,6 +10,12 @@
             @include('partials.checkout.shipping_option', [
                 'step' => $steps['shipping_option'],
             ])
+
+            @include('partials.checkout.address', [
+                'type' => 'billing',
+                'step' => $steps['billing_address'],
+            ])
+
             <button wire:click="checkout">Checkout</button>
         </div>
         <div class="w-1/3 ml-12">
