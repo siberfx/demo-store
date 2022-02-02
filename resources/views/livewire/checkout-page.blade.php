@@ -2,10 +2,6 @@
   <div class="relative max-w-screen-xl px-4 py-8 mx-auto">
     <div class="flex">
         <div class="space-y-6 grow">
-            {{-- @livewire('components.checkout-address', [
-                'type' => 'shipping'
-            ]) --}}
-
             @include('partials.checkout.address', [
                 'type' => 'shipping',
                 'step' => $steps['shipping_address'],
@@ -14,13 +10,6 @@
             @include('partials.checkout.shipping_option', [
                 'step' => $steps['shipping_option'],
             ])
-{{--
-            @livewire('components.shipping-options') --}}
-
-            {{-- @livewire('components.checkout-address', [
-                'type' => 'billing'
-            ]) --}}
-
             <button wire:click="checkout">Checkout</button>
         </div>
         <div class="w-1/3 ml-12">
