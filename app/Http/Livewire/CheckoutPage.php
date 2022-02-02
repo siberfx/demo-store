@@ -65,8 +65,7 @@ class CheckoutPage extends Component
         'shipping_address' => 1,
         'shipping_option' => 2,
         'billing_address' => 3,
-        'payment_details' => 4,
-        'payment' => 5,
+        'payment' => 4,
     ];
 
     /**
@@ -220,6 +219,8 @@ class CheckoutPage extends Component
                     );
                     $this->cart->getManager()->setBillingAddress($address);
                 }
+
+                $this->billing = $this->cart->billingAddress;
             }
         }
 
