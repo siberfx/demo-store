@@ -100,6 +100,7 @@ class CheckoutPage extends Component
     {
         if (!$this->cart = CartSession::current()) {
             $this->redirect('/');
+            return;
         }
 
         // Do we have a shipping address?
