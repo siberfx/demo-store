@@ -158,8 +158,7 @@ class CheckoutPageTest extends TestCase
     }
 
     /**
-     * Test the component mounts correctly.
-     * @group moomoo
+     * Test we can save the shipping address
      *
      * @return void
      */
@@ -179,6 +178,8 @@ class CheckoutPageTest extends TestCase
             $cart->getManager()->getCart()
         );
 
+        $country = Country::factory()->create();
+
         Livewire::test(CheckoutPage::class)
             ->assertViewIs('livewire.checkout-page')
             ->call('saveAddress', 'shipping')
@@ -190,7 +191,22 @@ class CheckoutPageTest extends TestCase
                 "shipping.city" => 'required',
                 "shipping.postcode" => 'required',
                 "shipping.contact_email" => 'email',
-            ]);
+            ])
+            ->set('address.first_name', 'Tony')
+            ->set('address.last_name', 'Stark')
+            ->set('address.company_name', 'Stark Industries')
+            ->set('address.line_one', '1200 Industrial Ave')
+            ->set('address.line_two', null)
+            ->set('address.line_three', null)
+            ->set('address.city', 'Long Beach')
+            ->set('address.state', 'CA')
+            ->set('address.postcode', '90803')
+            ->set('address.delivery_instructions', 'Press the buzzer')
+            ->set('address.contact_email', 'deliveries@stark.co')
+            ->set('address.contact_phone', '123123123')
+            ->set('address.country_id', $country->id)
+            ->call('saveAddress', 'shipping')
+            ->assertHasNoErrors();
     }
     // /**
     //  * Test validation is set.
