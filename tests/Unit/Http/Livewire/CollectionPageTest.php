@@ -4,6 +4,8 @@ namespace Tests\Unit\Http\Livewire;
 
 use App\Http\Livewire\CollectionPage;
 use GetCandy\Models\Collection;
+use GetCandy\Models\Currency;
+use GetCandy\Models\Price;
 use GetCandy\Models\Product;
 use GetCandy\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -70,6 +72,10 @@ class CollectionPageTest extends TestCase
      */
     public function test_collection_renders_products()
     {
+        $currency = Currency::factory()->create([
+            'default' => true,
+        ]);
+
         $collection = Collection::factory()
             ->hasUrls(1, [
                 'default' => true,
@@ -78,7 +84,13 @@ class CollectionPageTest extends TestCase
                     ->hasUrls(1, [
                         'default' => true,
                     ])
-                    ->has(ProductVariant::factory(), 'variants')
+                    ->has(ProductVariant::factory()->afterCreating(function ($variant) use ($currency) {
+                        $variant->prices()->create(
+                            Price::factory()->make([
+                                'currency_id' => $currency->id,
+                            ])->getAttributes()
+                        );
+                    }), 'variants')
             )->create();
 
         $component = Livewire::test(CollectionPage::class, ['slug' => $collection->urls->first()->slug])

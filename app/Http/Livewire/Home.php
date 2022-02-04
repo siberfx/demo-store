@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use GetCandy\Models\Collection;
+use GetCandy\Models\Url;
 use Livewire\Component;
 
 class Home extends Component
@@ -14,7 +15,7 @@ class Home extends Component
      */
     public function getSaleCollectionProperty()
     {
-        return Collection::find(6);
+        return Url::whereElementType(Collection::class)->whereSlug('sale')->first()?->element;
     }
 
     /**
