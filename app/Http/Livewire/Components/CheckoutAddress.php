@@ -51,17 +51,6 @@ class CheckoutAddress extends Component
     ];
 
     /**
-     * Whether billing is the same as shipping.
-     *
-     * @var boolean
-     */
-    public bool $shippingIsBilling = false;
-
-    protected $listeners = [
-        'refreshAddress',
-    ];
-
-    /**
      * {@inheritDoc}
      */
     public function mount()
