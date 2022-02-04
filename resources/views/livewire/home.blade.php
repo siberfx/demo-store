@@ -21,7 +21,7 @@
 
     <div class="grid grid-cols-2 mt-8 lg:grid-cols-4 gap-x-4 gap-y-8">
         @foreach ($this->randomCollection->products as $product)
-            <a href="" class="block">
+            <a href="{{ route('product.view', $product->defaultUrl->slug) }}" class="block">
                 @if($product->thumbnail)
                     <img
                         loading="lazy"
