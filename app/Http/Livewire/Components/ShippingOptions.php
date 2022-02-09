@@ -65,7 +65,7 @@ class ShippingOptions extends Component
 
         CartSession::current()->getManager()->setShippingOption($option);
 
-        $this->emit('selectedShippingOption');
+        $this->emitUp('selectedShippingOption');
     }
 
     /**

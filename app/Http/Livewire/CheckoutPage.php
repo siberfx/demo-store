@@ -74,6 +74,7 @@ class CheckoutPage extends Component
     protected $listeners = [
         'cartUpdated' => 'refreshCart',
         'selectedShippingOption' => 'refreshCart',
+        'selectedShippingOption' => 'refreshCart',
     ];
 
     /**
@@ -238,6 +239,8 @@ class CheckoutPage extends Component
         $option = $this->shippingOptions->first(fn($option) => $option->getIdentifier() == $this->chosenShipping);
 
         CartSession::current()->getManager()->setShippingOption($option);
+
+        $this->refreshCart();
 
         $this->determineCheckoutStep();
     }
