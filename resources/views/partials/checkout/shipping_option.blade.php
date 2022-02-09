@@ -18,7 +18,7 @@
                 @if($errors->has('chosenShipping'))
                     <p class="p-4 text-sm text-red-500">{{ $errors->first('chosenShipping') }}</p>
                 @endif
-            @else
+            @elseif($currentStep > $step && $this->shippingOption)
                 <div class="flex justify-between">
                     <span class="text-xl font-medium">{{ $this->shippingOption->getDescription() }}</span>
                     <span>{{ $this->shippingOption->getPrice()->formatted() }}</span>
